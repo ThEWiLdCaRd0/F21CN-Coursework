@@ -2,7 +2,8 @@ import random
 import sympy
 import json
 
-def generate_superincreasing_sequence(n, start=2, stop=5):
+
+def generate_superincreasing_sequence(n, start=10, stop=50):  # Increased range
     sequence = []
     total = 0
     for _ in range(n):
@@ -10,6 +11,7 @@ def generate_superincreasing_sequence(n, start=2, stop=5):
         sequence.append(next_val)
         total += next_val
     return sequence
+
 
 def generate_keypair(n):
     e = generate_superincreasing_sequence(n)
@@ -21,6 +23,7 @@ def generate_keypair(n):
             break
     h = [(w * ei) % q for ei in e]
     return {'public': h, 'private': {'e': e, 'q': q, 'w': w}, 'n': n}
+
 
 if __name__ == "__main__":
     n = int(input("Enter bit-length for encryption blocks (n): "))
@@ -41,7 +44,7 @@ if __name__ == "__main__":
     # Public key to be shared with Alice/anyone = Bob's public key
     with open('public_key.json', 'w') as f:
         json.dump(public_data, f)
-    print("\nRecepient's Public key and block size exported to public_key.json.")
+    print("\nRecipient's public key and block size exported to public_key.json.")
 
     # Save all private details for Bob
     private_data = {
@@ -53,7 +56,7 @@ if __name__ == "__main__":
         },
         'block_size': n
     }
-        # Private key not to be shared with Alice/anyone = Bob's private key
+    # Private key not to be shared with Alice/anyone = Bob's private key
     with open('recepient_private_key.json', 'w') as f:
         json.dump(private_data, f)
-    print("Full private key details exported to private_key.json.")
+    print("Full private key details exported to recepient_private_key.json.")
